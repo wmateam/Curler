@@ -111,6 +111,24 @@ class CurlRequest
         return $this->result();
     }
 
+    /**
+     * @param $fullPath
+     *
+     * @return string
+     */
+    public function file($fullPath)
+    {
+        // Download the file
+        $temp_file_contents = $this->result();
+
+        //Giving a pointer to the file
+        $fp = fopen($fullPath, 'w+');
+        fwrite($fp, $temp_file_contents->getBody());
+        fclose($fp);
+
+        return $fullPath;
+    }
+
     public function setAuthentication($username, $password)
     {
         $this->optArray[CURLOPT_USERPWD] = $username . ':' . $password;
